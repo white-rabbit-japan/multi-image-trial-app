@@ -1,5 +1,5 @@
 import React from "react";
-import placeholderImage from "../images/placeholder.png";
+import placeholderImage from "../images/placeholder.jpg";
 import packageImage from "../images/package.jpg";
 import packageLabelImage from "../images/package-label.jpg";
 
@@ -18,29 +18,38 @@ export default class ReceivePackageComponent extends React.Component {
     });
   }
 
-  capturePackageImage() {
-    this.setState({
-      cameraOn: false,
-    });
-    return packageImage;
+  capture(mode) {
+
+    let ret;
+    switch (mode) {
+      case "PACKAGEIMAGE":
+        ret = packageImage;
+        this.setState({
+          cameraOn: false,
+        });
+        break;
+      case "PACKAGELABELIMAGE":
+        ret = packageLabelImage;
+        this.setState({
+          cameraOn: false,
+        });
+        break;
+      default:
+        ret = placeholderImage
+    }
+    return ret;
   }
 
-  capturePackageLabelImage() {
-    this.setState({
-      cameraOn: false,
-    });
-    return packageLabelImage;
+
+  generatePlaceholderImage() {
+    return <img src={placeholderImage} style={{marginBottom: "1em"}}
+                alt="placeholder image"/>;
   }
 
-  generatePlaceholderImage(){
-   return <img src={placeholderImage} style={{width: "480", height: "auto", marginBottom: "1em"}}
-               alt="placeholder image"/>;
-  }
-
-  cameraFeed(){
-    if(this.state.cameraOn){
+  cameraFeed() {
+    if (this.state.cameraOn) {
       return this.generatePlaceholderImage();
-    }else{
+    } else {
       return null;
     }
   }
